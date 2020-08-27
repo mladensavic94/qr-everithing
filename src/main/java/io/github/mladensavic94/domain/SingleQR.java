@@ -13,7 +13,8 @@ public class SingleQR {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qrSequence")
     private Long id;
     private String name;
-    private String link;
+    private String qrLink;
+    private String qrCodeImgLink;
     private String description;
 
     public Long getId() {
@@ -32,12 +33,12 @@ public class SingleQR {
         this.name = name;
     }
 
-    public String getLink() {
-        return link;
+    public String getQrLink() {
+        return qrLink;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setQrLink(String link) {
+        this.qrLink = link;
     }
 
     public String getDescription() {
@@ -48,12 +49,11 @@ public class SingleQR {
         this.description = description;
     }
 
-    public static SingleQR from(Row row) {
-        SingleQR qr = new SingleQR();
-        qr.setId(row.getLong("id"));
-        qr.setLink(row.getString("link"));
-        qr.setDescription(row.getString("description"));
-        qr.setName(row.getString("name"));
-        return qr;
+    public String getQrCodeImgLink() {
+        return qrCodeImgLink;
+    }
+
+    public void setQrCodeImgLink(String qrCodeImgLink) {
+        this.qrCodeImgLink = qrCodeImgLink;
     }
 }
