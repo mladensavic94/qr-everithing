@@ -1,7 +1,5 @@
 package io.github.mladensavic94.domain;
 
-import io.vertx.mutiny.sqlclient.Row;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +7,7 @@ import javax.persistence.*;
 public class SingleQR {
 
     @Id
-    @SequenceGenerator(name = "qrSequence", sequenceName = "qrSequence", allocationSize = 1, initialValue = 10)
+    @SequenceGenerator(name = "qrSequence", sequenceName = "qrSequence", allocationSize = 20)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qrSequence")
     private Long id;
     private String name;

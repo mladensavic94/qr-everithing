@@ -1,20 +1,22 @@
 package io.github.mladensavic94.repositories;
 
 import io.github.mladensavic94.domain.SingleQR;
-import io.github.mladensavic94.util.QRCodeGenerator;
+import io.github.mladensavic94.qrcode.QRCodeGenerator;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.reactive.mutiny.Mutiny;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-@ApplicationScoped
+@Singleton
 public class SingleQRRepo {
 
     @Inject
     Mutiny.Session mutinySession;
+    @Inject
+    QRCodeGenerator generator;
 
     @ConfigProperty(name = "content.host.address")
     String contentWebPath;
@@ -25,7 +27,7 @@ public class SingleQRRepo {
 
     public Uni<SingleQR> findById(Long id) {
         return mutinySession.find(SingleQR.class, id).onItem().transform(singleQR -> {
-            QRCodeGenerator.generateQRCodeImage(singleQR, contentWebPath);
+            generator.generateQRCodeImage(singleQR, contentWebPath);
             return singleQR;
         });
     }
