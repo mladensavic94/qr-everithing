@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class SingleQRRepo {
+public class SingleQRRepository {
 
     @Inject
     Mutiny.Session mutinySession;

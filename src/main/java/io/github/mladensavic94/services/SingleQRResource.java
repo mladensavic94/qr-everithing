@@ -1,8 +1,7 @@
 package io.github.mladensavic94.services;
 
 import io.github.mladensavic94.domain.SingleQR;
-import io.github.mladensavic94.repositories.SingleQRRepo;
-import io.reactivex.annotations.NonNull;
+import io.github.mladensavic94.repositories.SingleQRRepository;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
@@ -20,7 +19,7 @@ import javax.ws.rs.core.Response;
 public class SingleQRResource {
 
     @Inject
-    SingleQRRepo repo;
+    SingleQRRepository repo;
 
     @GET
     public Multi<SingleQR> get() {

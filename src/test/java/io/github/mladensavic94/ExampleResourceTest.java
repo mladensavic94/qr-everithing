@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-@QuarkusTest
+//@QuarkusTest
 public class ExampleResourceTest {
 
     @Test
