@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 @Testcontainers
 @QuarkusTest
-public class ExampleResourceTest {
+public class SingleQRResourceIT {
 
     @Container
     static PostgreSQLContainer db = new PostgreSQLContainer<>("postgres:10.5")
