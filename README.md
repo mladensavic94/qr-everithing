@@ -1,6 +1,6 @@
 # qr-everything project
 
-[![Build](https://github.com/mladensavic94/qr-everything/workflows/build/badge.svg)](https://github.com/mladensavic94/qr-everything/actions?query=workflow%3Abuild)
+![mvn build](https://github.com/mladensavic94/qr-everything/workflows/mvn%20build/badge.svg?branch=master&event=push)
 
 ##Description
 Create REST API and PWA for users to generate QR codes for their media wall.
