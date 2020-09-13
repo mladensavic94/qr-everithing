@@ -4,13 +4,10 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,7 +15,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 @Testcontainers
 @QuarkusTest
-public class SingleQRResourceIT {
+class SingleQRResourceIT {
 
     @Container
     static PostgreSQLContainer db = new PostgreSQLContainer<>("postgres:10.5")
@@ -32,7 +29,7 @@ public class SingleQRResourceIT {
 
 
     @Test
-    public void testHelloEndpoint() {
+    void testHelloEndpoint() {
         given()
                 .when().get("/qr")
                 .then()

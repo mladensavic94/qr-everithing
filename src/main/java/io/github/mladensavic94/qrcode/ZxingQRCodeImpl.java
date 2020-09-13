@@ -13,7 +13,7 @@ import org.jboss.logging.Logger;
 
 import javax.inject.Singleton;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 @Singleton
@@ -25,7 +25,7 @@ public class ZxingQRCodeImpl implements QRCodeGeneratorService{
     public BufferedImage createQRCode(SingleQR singleQR) {
         QRCodeWriter barcodeWriter = new QRCodeWriter();
         try {
-            Map<EncodeHintType, Object> hintMap = new HashMap<>();
+            Map<EncodeHintType, Object> hintMap = new EnumMap<>(EncodeHintType.class);
             hintMap.put(EncodeHintType.MARGIN, 1);
             BitMatrix bitMatrix = barcodeWriter.encode(singleQR.getQrLink(), BarcodeFormat.QR_CODE, ImageScale.SMALL.getSize(), ImageScale.SMALL.getSize(), hintMap);
             return MatrixToImageWriter.toBufferedImage(bitMatrix);

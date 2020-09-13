@@ -6,14 +6,11 @@ import io.smallrye.mutiny.Uni;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 @Singleton
 @Path("/images")

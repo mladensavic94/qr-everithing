@@ -38,7 +38,7 @@ public class ImageCleanUpService {
             });
             if (filesToDelete != null && filesToDelete.length > 0){
                 Optional<Boolean> reduce = Arrays.stream(filesToDelete).map(File::delete).reduce((aBoolean, aBoolean2) -> aBoolean && aBoolean2);
-                if (reduce.get())
+                if (reduce.isPresent() && reduce.get())
                     LOGGER.info("All old images deleted");
                 else
                     LOGGER.error("Some files from list are not deleted " + Arrays.stream(filesToDelete).map(File::getName).collect(Collectors.joining(", ")));
