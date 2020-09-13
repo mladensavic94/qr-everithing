@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Analyze on SonarCloud
+          name: Analyze on SonarCloud with CircleCI
           command: mvn verify sonar:sonar
 
 workflows:
