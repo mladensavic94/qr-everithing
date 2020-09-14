@@ -52,7 +52,7 @@ public class ImageRepository {
             var originalImage = new File(contentFolder + imageName);
             if (originalImage.exists()) {
                 var original = ImageIO.read(originalImage);
-                var scaledImageBuffer = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+                var scaledImageBuffer = new BufferedImage(size, size, BufferedImage.TYPE_BYTE_GRAY);
                 var scaledInstance = original.getScaledInstance(size, size, Image.SCALE_DEFAULT);
                 scaledImageBuffer.getGraphics().drawImage(scaledInstance, 0, 0, null);
                 ImageIO.write(scaledImageBuffer, "png", scaledImage);

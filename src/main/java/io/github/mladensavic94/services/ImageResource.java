@@ -26,8 +26,12 @@ public class ImageResource {
     @Produces("image/png")
     public Uni<Response> returnImage(@PathParam String imageName, @QueryParam("scale") @DefaultValue("SMALL") String scale,
                                      @QueryParam("size") @DefaultValue("200") int size) {
-        File img = imageRepository.retrieveImage(imageName, ImageScale.valueOf(scale.toUpperCase()), size);
-        LOGGER.info("Retrieved image " + img.getPath());
-        return Uni.createFrom().item(Response.ok(img).build());
+        try {
+            File img = imageRepository.retrieveImage(imageName, ImageScale.valueOf(scale.toUpperCase()), size);
+            LOGGER.info("Retrieved image " + img.getPath());
+            return Uni.createFrom().item(Response.ok(img).build());
+        }catch (Exception e){
+            return Uni.createFrom().item(Response.status(400).entity(e.getMessage()).build());
+        }
     }
 }

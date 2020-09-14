@@ -1,6 +1,7 @@
 package io.github.mladensavic94.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "single_qr", schema = "public")
@@ -10,7 +11,9 @@ public class SingleQR {
     @SequenceGenerator(name = "qrSequence", sequenceName = "qrSequence", allocationSize = 20)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qrSequence")
     private Long id;
+    @NotBlank(message = "Name cannot be null")
     private String name;
+    @NotBlank(message = "QR link cannot be null")
     private String qrLink;
     private String qrCodeImgLink;
     private String description;

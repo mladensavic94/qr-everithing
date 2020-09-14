@@ -1,5 +1,6 @@
 package io.github.mladensavic94.services;
 
+import io.github.mladensavic94.domain.QREverythingException;
 import io.github.mladensavic94.domain.SingleQR;
 import io.github.mladensavic94.repositories.SingleQRRepository;
 import io.smallrye.mutiny.Multi;
@@ -27,7 +28,7 @@ public class SingleQRResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     public Uni<SingleQR> get(@PathParam Long id) {
         return repo.findById(id);
     }
@@ -35,6 +36,7 @@ public class SingleQRResource {
     @POST
     public Uni<Response> addNew(SingleQR singleQR) {
         Uni<Long> id = repo.persist(singleQR);
-        return id.onItem().transform(aLong -> Response.ok(aLong).build());
+        return id.onItem().transform(aLong -> Response.ok(aLong).build())
+                .onFailure().transform(throwable -> new QREverythingException("Error persisting qr code: %s", throwable.getMessage()));
     }
 }

@@ -26,7 +26,7 @@ public class ImageCleanUpService {
 
 
     @Scheduled(cron = "{cleanup.cron}")
-    void cleanupOldImages() {
+    public void cleanupOldImages() {
         LOGGER.info("Starting cleanup job");
         var root = new File(contentFolder);
         if (root.exists()) {

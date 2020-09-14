@@ -1,40 +1,93 @@
 package io.github.mladensavic94;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
+import io.github.mladensavic94.domain.SingleQR;
+import io.github.mladensavic94.repositories.SingleQRRepository;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.inject.Inject;
+
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertEquals;
 
 @Testcontainers
 @QuarkusTest
-class SingleQRResourceIT {
+class SingleQRResourceIT extends TestContainerSetup{
 
-    @Container
-    static PostgreSQLContainer db = new PostgreSQLContainer<>("postgres:10.5")
-            .withExposedPorts(5432)
-            .withInitScript("init.sql")
-            .withCreateContainerCmdModifier(cmd -> {
-                cmd
-                        .withHostName("localhost")
-                        .withPortBindings(new PortBinding(Ports.Binding.bindPort(5432), new ExposedPort(5432)));
-            });
-
+    @Inject
+    SingleQRRepository repository;
 
     @Test
-    void testHelloEndpoint() {
+    void testCreateNewRecord() {
+        SingleQR singleQR = prepareDummyQR();
         given()
-                .when().get("/qr")
+                .when()
+                .body(singleQR)
+                .header("Content-Type", "application/json")
+                .post("/qr")
                 .then()
                 .statusCode(200)
-                .body(is(notNullValue()));
+                .body(is(not(equalTo(0))));
+    }
+
+    @Test
+    void testCreateNewRecordWithoutName() {
+        SingleQR singleQR = new SingleQR();
+        given()
+                .when()
+                .body(singleQR)
+                .header("Content-Type", "application/json")
+                .post("/qr")
+                .then()
+                .statusCode(500);
+    }
+
+    @Test
+    void testGetQRById() throws Exception {
+        SingleQR singleQR = prepareDummyQR();
+        Long id = repository.persist(singleQR).subscribe().asCompletionStage().get();
+        Response response = given()
+                .when()
+                .header("Content-Type", "application/json")
+                .get("/qr/{id}", id)
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON).extract().response();
+        assertEquals(response.jsonPath().getString("qrCodeImgLink"), "http://localhost:8080/images/name.png");
+        assertEquals(response.jsonPath().getString("description"), singleQR.getDescription());
+        assertEquals(response.jsonPath().getString("name"), singleQR.getName());
+
+    }
+
+    @Test
+    void testGetAll() throws Exception {
+        SingleQR singleQR = prepareDummyQR();
+        Long id = repository.persist(singleQR).subscribe().asCompletionStage().get();
+        Response response = given()
+                .when()
+                .header("Content-Type", "application/json")
+                .get("/qr")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON).extract().response();
+        System.out.println(response.jsonPath().prettyPrint());
+        assertEquals(response.jsonPath().getString("qrCodeImgLink"), "[qrImgLink]");
+        assertEquals(response.jsonPath().getString("description"), "[" + singleQR.getDescription() + "]");
+        assertEquals(response.jsonPath().getString("name"), "[" + singleQR.getName() + "]");
+
+    }
+
+    private SingleQR prepareDummyQR() {
+        SingleQR singleQR = new SingleQR();
+        singleQR.setQrLink("qrLink");
+        singleQR.setQrCodeImgLink("qrImgLink");
+        singleQR.setDescription("desc");
+        singleQR.setName("name");
+        return singleQR;
     }
 
 }
