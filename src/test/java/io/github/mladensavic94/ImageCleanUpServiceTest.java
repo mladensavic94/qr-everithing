@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @QuarkusTest
-public class ImageCleanUpServiceTest {
+class ImageCleanUpServiceTest {
 
     @ConfigProperty(name = "content.folder.address")
     String contentFolder;
@@ -24,8 +24,10 @@ public class ImageCleanUpServiceTest {
         var oldFile = new File(contentFolder + "oldFile.png");
         if(!oldFile.exists())
             oldFile.createNewFile();
-        oldFile.setLastModified(new Date().toInstant().minus(2, ChronoUnit.DAYS).toEpochMilli());
+        oldFile.setLastModified(new Date().toInstant().minus(3, ChronoUnit.DAYS).toEpochMilli());
         var newFile = new File(contentFolder + "newFile.png");
+        if(!newFile.exists())
+            newFile.createNewFile();
 
         service.cleanupOldImages();
 

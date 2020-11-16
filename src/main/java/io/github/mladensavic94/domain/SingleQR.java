@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class SingleQR {
 
     @Id
-    @SequenceGenerator(name = "qrSequence", sequenceName = "qrSequence", allocationSize = 20)
+    @SequenceGenerator(name = "qrSequence", sequenceName = "qrSequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qrSequence")
     private Long id;
     @NotBlank(message = "Name cannot be null")
@@ -17,6 +17,7 @@ public class SingleQR {
     private String qrLink;
     private String qrCodeImgLink;
     private String description;
+    private QRCodeType type = QRCodeType.WEB;
 
     public Long getId() {
         return id;
@@ -56,5 +57,13 @@ public class SingleQR {
 
     public void setQrCodeImgLink(String qrCodeImgLink) {
         this.qrCodeImgLink = qrCodeImgLink;
+    }
+
+    public QRCodeType getType() {
+        return type;
+    }
+
+    public void setType(QRCodeType type) {
+        this.type = type;
     }
 }

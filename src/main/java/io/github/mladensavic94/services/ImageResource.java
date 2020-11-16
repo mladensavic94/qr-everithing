@@ -22,9 +22,9 @@ public class ImageResource {
     ImageRepository imageRepository;
 
     @GET
-    @Path("{imageName}")
+    @Path("/{imageName}")
     @Produces("image/png")
-    public Uni<Response> returnImage(@PathParam String imageName, @QueryParam("scale") @DefaultValue("SMALL") String scale,
+    public Uni<Response> returnImage(@PathParam("imageName") String imageName, @QueryParam("scale") @DefaultValue("SMALL") String scale,
                                      @QueryParam("size") @DefaultValue("200") int size) {
         try {
             File img = imageRepository.retrieveImage(imageName, ImageScale.valueOf(scale.toUpperCase()), size);

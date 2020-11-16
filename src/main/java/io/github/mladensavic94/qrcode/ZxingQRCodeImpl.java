@@ -27,7 +27,7 @@ public class ZxingQRCodeImpl implements QRCodeGeneratorService{
         try {
             Map<EncodeHintType, Object> hintMap = new EnumMap<>(EncodeHintType.class);
             hintMap.put(EncodeHintType.MARGIN, 1);
-            BitMatrix bitMatrix = barcodeWriter.encode(singleQR.getQrLink(), BarcodeFormat.QR_CODE, ImageScale.SMALL.getSize(), ImageScale.SMALL.getSize(), hintMap);
+            BitMatrix bitMatrix = barcodeWriter.encode(prepareQRContent(singleQR), BarcodeFormat.QR_CODE, ImageScale.SMALL.getSize(), ImageScale.SMALL.getSize(), hintMap);
             return MatrixToImageWriter.toBufferedImage(bitMatrix);
         } catch (WriterException e) {
             LOGGER.error(String.format("Error while creating qr code %s %s", singleQR.getQrLink(), e.getMessage()));

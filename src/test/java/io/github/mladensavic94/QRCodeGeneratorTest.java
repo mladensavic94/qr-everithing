@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 @QuarkusTest
-public class QRCodeGeneratorTest {
+class QRCodeGeneratorTest {
 
     @ConfigProperty(name = "content.folder.address")
     String contentFolder;

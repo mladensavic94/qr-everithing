@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 @Testcontainers
 @QuarkusTest
-class SingleQRResourceIT extends TestContainerSetup{
+class SingleQRResourceIT extends TestContainerSetup {
 
     @Inject
     SingleQRRepository repository;
@@ -53,11 +53,11 @@ class SingleQRResourceIT extends TestContainerSetup{
         Response response = given()
                 .when()
                 .header("Content-Type", "application/json")
-                .get("/qr/{id}", id)
+                .get("/qr/{id}", id.toString())
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON).extract().response();
-        assertEquals(response.jsonPath().getString("qrCodeImgLink"), "http://localhost:8080/images/name.png");
+        assertEquals("http://localhost:8080/images/name.png", response.jsonPath().getString("qrCodeImgLink"));
         assertEquals(response.jsonPath().getString("description"), singleQR.getDescription());
         assertEquals(response.jsonPath().getString("name"), singleQR.getName());
 
@@ -75,7 +75,7 @@ class SingleQRResourceIT extends TestContainerSetup{
                 .statusCode(200)
                 .contentType(ContentType.JSON).extract().response();
         System.out.println(response.jsonPath().prettyPrint());
-        assertEquals(response.jsonPath().getString("qrCodeImgLink"), "[qrImgLink]");
+        assertEquals("[qrImgLink]", response.jsonPath().getString("qrCodeImgLink"));
         assertEquals(response.jsonPath().getString("description"), "[" + singleQR.getDescription() + "]");
         assertEquals(response.jsonPath().getString("name"), "[" + singleQR.getName() + "]");
 

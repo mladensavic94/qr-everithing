@@ -29,7 +29,7 @@ public class SingleQRResource {
 
     @GET
     @Path("/{id}")
-    public Uni<SingleQR> get(@PathParam Long id) {
+    public Uni<SingleQR> get(@PathParam("id") Long id) {
         return repo.findById(id);
     }
 

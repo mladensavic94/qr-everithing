@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 @Testcontainers
 @QuarkusTest
-public class ImageResourceIT extends TestContainerSetup {
+class ImageResourceIT extends TestContainerSetup {
 
     @ConfigProperty(name = "content.folder.address")
     String contentFolder;
