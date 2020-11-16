@@ -37,8 +37,12 @@ public class ImageRepository {
                 return scaleImage(imageName, scaledImage, resolveDimensions(scale, size));
             }
         }
+    }
 
-
+    public File retrieveImage(String imageName, ImageScale scale) {
+        if (scale.equals(ImageScale.CUSTOM))
+            throw new QREverythingException("Custom scale needs input size");
+        return retrieveImage(imageName, scale, scale.getSize());
     }
 
     private int resolveDimensions(ImageScale scale, int size) {

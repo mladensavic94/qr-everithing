@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
  * @author Mladen Savic (mladensavic94@gmail.com)
  */
 @QuarkusTest
-public class QRCodeGeneratorServiceTest {
+class QRCodeGeneratorServiceTest {
 
     QRCodeGeneratorService qrCodeGeneratorService = new ZxingQRCodeImpl();
 
