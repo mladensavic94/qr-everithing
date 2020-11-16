@@ -10,6 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.inject.Inject;
 
+import static io.github.mladensavic94.TestsUtil.prepareDummyQR;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
@@ -81,13 +82,6 @@ class SingleQRResourceIT extends TestContainerSetup {
 
     }
 
-    private SingleQR prepareDummyQR() {
-        SingleQR singleQR = new SingleQR();
-        singleQR.setQrLink("qrLink");
-        singleQR.setQrCodeImgLink("qrImgLink");
-        singleQR.setDescription("desc");
-        singleQR.setName("name");
-        return singleQR;
-    }
+
 
 }

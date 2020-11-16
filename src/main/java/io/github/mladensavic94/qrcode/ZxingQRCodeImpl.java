@@ -29,7 +29,7 @@ public class ZxingQRCodeImpl implements QRCodeGeneratorService{
             hintMap.put(EncodeHintType.MARGIN, 1);
             BitMatrix bitMatrix = barcodeWriter.encode(prepareQRContent(singleQR), BarcodeFormat.QR_CODE, ImageScale.SMALL.getSize(), ImageScale.SMALL.getSize(), hintMap);
             return MatrixToImageWriter.toBufferedImage(bitMatrix);
-        } catch (WriterException e) {
+        } catch (Exception e) {
             LOGGER.error(String.format("Error while creating qr code %s %s", singleQR.getQrLink(), e.getMessage()));
             throw new QREverythingException("Error in generation %s", e.getMessage());
         }
