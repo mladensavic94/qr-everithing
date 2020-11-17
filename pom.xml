@@ -20,6 +20,7 @@
     <sonar.organization>mladensavic94</sonar.organization>
     <sonar.projectKey>mladensavic94_qr-everything</sonar.projectKey>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -132,6 +133,30 @@
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.5</version>
+        <configuration>
+          <output>file</output>
+          <append>false</append>
+        </configuration>
+        <executions>
+          <execution>
+            <id>prepare</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
