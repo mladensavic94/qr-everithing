@@ -1,6 +1,7 @@
 package io.github.mladensavic94;
 
 import io.github.mladensavic94.domain.ImageScale;
+import io.github.mladensavic94.domain.QREverythingException;
 import io.github.mladensavic94.repositories.ImageRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Mladen Savic (mladensavic94@gmail.com)
@@ -66,7 +68,7 @@ class ImageRepositoryTest {
         Method method = ImageRepository.class.getDeclaredMethod("scaleImage", String.class, File.class, int.class);
         method.setAccessible(true);
         File returnFile = new File(contentFolderPath + "name2.png");
-        Assertions.assertThrows(InvocationTargetException.class,
+        assertThrows(InvocationTargetException.class,
                 () -> method.invoke(repository, "non_existingImage.png", returnFile, 100));
     }
 
@@ -79,6 +81,26 @@ class ImageRepositoryTest {
 
         assertThat("name_medium.png", equalTo(file.getName()));
         assertThat(new File(contentFolderPath + "name_medium.png").lastModified(), equalTo(file.lastModified()));
+    }
+
+    @Test
+    void testWillRetrieveExistingImageSmall() throws Exception{
+        Field contentFolder = ImageRepository.class.getDeclaredField("contentFolder");
+        contentFolder.setAccessible(true);
+        contentFolder.set(repository, contentFolderPath);
+        File file = repository.retrieveImage("name.png", ImageScale.SMALL);
+
+        assertThat("name.png", equalTo(file.getName()));
+        assertThat(new File(contentFolderPath + "name.png").lastModified(), equalTo(file.lastModified()));
+    }
+
+    @Test
+    void testWillRetrieveExistingImageCustom() throws Exception{
+        Field contentFolder = ImageRepository.class.getDeclaredField("contentFolder");
+        contentFolder.setAccessible(true);
+        contentFolder.set(repository, contentFolderPath);
+
+        assertThrows(QREverythingException.class, () -> repository.retrieveImage("name.png", ImageScale.CUSTOM));
     }
 
     @Test

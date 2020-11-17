@@ -141,6 +141,11 @@
         <configuration>
           <output>file</output>
           <append>false</append>
+          <excludes>
+            <exclude>io.github.mladensavic94.domain.SingleQR</exclude>
+            <exclude>io.github.mladensavic94.domain.ImageScale</exclude>
+            <exclude>io.github.mladensavic94.domain.QRCodeType</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>
